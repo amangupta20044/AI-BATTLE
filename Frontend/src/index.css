@@ -374,8 +374,8 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   flex: 1;
-  gap: var(--space-6);
-  padding: var(--space-10);
+  gap: var(--space-0);
+  padding: var(--space-0);
 }
 
 .welcome-icon {

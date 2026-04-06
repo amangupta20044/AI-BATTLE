@@ -10,9 +10,9 @@ import { sendMessage } from './services/api';
 
 const SUGGESTIONS = [
   { icon: '💡', text: 'Write a binary search in Python' },
-  { icon: '⚡', text: 'Implement a linked list in JavaScript' },
-  { icon: '🔥', text: 'Sort an array using quicksort in Java' },
-  { icon: '🚀', text: 'Create a REST API endpoint in Node.js' },
+  { icon: '⚡', text: 'IPL 2026 winner prediction' },
+  { icon: '🔥', text: 'Sort an array using quicksort in c++' },
+  { icon: '🚀', text: 'How to find true love' },
 ];
 
 function WelcomeScreen({ onSuggestion }) {
@@ -21,7 +21,7 @@ function WelcomeScreen({ onSuggestion }) {
       <div className="welcome-icon">⚔️</div>
       <h1 className="welcome-title">AI Battle Arena</h1>
       <p className="welcome-subtitle">
-        Ask any coding question. Two AI models compete to give you the best solution.
+        Ask any question. Two AI models compete to give you the best solution.
         A judge scores them both and declares a winner.
       </p>
       <div className="welcome-suggestions">
