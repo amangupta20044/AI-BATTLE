@@ -1,40 +1,31 @@
-import { useState } from 'react';
+function deriveTitle(prompt) {
+  const trimmed = prompt.trim();
+  if (trimmed.length <= 40) return trimmed;
+  return `${trimmed.slice(0, 40)}…`;
+}
 
-const MOCK_HISTORY = [
-  {
-    id: 1,
-    title: "Factorial in C++",
-    preview: "write the factorial of n in c++ code",
-    time: "2m ago",
-  },
-  {
-    id: 2,
-    title: "Binary Search Tree",
-    preview: "implement BST with insert and search",
-    time: "1h ago",
-  },
-  {
-    id: 3,
-    title: "Quick Sort Algorithm",
-    preview: "write quicksort in Python with comments",
-    time: "3h ago",
-  },
-  {
-    id: 4,
-    title: "React Custom Hook",
-    preview: "create a useLocalStorage custom hook",
-    time: "Yesterday",
-  },
-  {
-    id: 5,
-    title: "REST API Design",
-    preview: "design a RESTful API for a todo app",
-    time: "2 days ago",
-  },
-];
+export function createChatEntry(id, prompt) {
+  const trimmed = prompt.trim();
+  return {
+    id,
+    title: deriveTitle(trimmed),
+    preview: trimmed,
+    time: 'Just now',
+    createdAt: Date.now(),
+  };
+}
 
-export default function Sidebar({ activeChatId, onNewChat, onSelectChat }) {
-  const [history] = useState(MOCK_HISTORY);
+export function updateChatEntry(chat, prompt) {
+  const trimmed = prompt.trim();
+  return {
+    ...chat,
+    preview: trimmed,
+    time: 'Just now',
+    createdAt: Date.now(),
+  };
+}
+
+export default function Sidebar({ history = [], activeChatId, onNewChat, onSelectChat }) {
 
   return (
     <div className="sidebar">

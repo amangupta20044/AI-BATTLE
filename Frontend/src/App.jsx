@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import './App.css';
 
-import Sidebar from './components/Sidebar';
+import Sidebar, { createChatEntry, updateChatEntry } from './components/Sidebar';
 import SolutionCard from './components/SolutionCard';
 import JudgePanel from './components/JudgePanel';
 import ChatInput from './components/ChatInput';
@@ -43,6 +43,7 @@ function WelcomeScreen({ onSuggestion }) {
 
 export default function App() {
   const [activeChatId, setActiveChatId] = useState(null);
+  const [chatHistory, setChatHistory] = useState([]);
   const [messages, setMessages] = useState([]); // { type: 'user'|'battle', content }
   const [isLoading, setIsLoading] = useState(false);
   const [currentJudge, setCurrentJudge] = useState(null);
@@ -55,6 +56,19 @@ export default function App() {
 
   const handleSend = async (prompt) => {
     if (!prompt.trim() || isLoading) return;
+
+    let chatId = activeChatId;
+    if (chatId === null) {
+      chatId = Date.now();
+      setActiveChatId(chatId);
+      setChatHistory((prev) => [createChatEntry(chatId, prompt), ...prev]);
+    } else {
+      setChatHistory((prev) =>
+        prev.map((chat) =>
+          chat.id === chatId ? updateChatEntry(chat, prompt) : chat
+        )
+      );
+    }
 
     // Add user message
     setMessages((prev) => [...prev, { type: 'user', content: prompt }]);
@@ -72,11 +86,12 @@ export default function App() {
       ]);
       setCurrentJudge(result.judge);
     } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
       setMessages((prev) => [
         ...prev,
         {
           type: 'error',
-          content: 'Something went wrong. Please try again.',
+          content: errorMessage,
         },
       ]);
     } finally {
@@ -104,6 +119,7 @@ export default function App() {
     <div className="app-layout">
       {/* ===== SIDEBAR ===== */}
       <Sidebar
+        history={chatHistory}
         activeChatId={activeChatId}
         onNewChat={handleNewChat}
         onSelectChat={handleSelectChat}

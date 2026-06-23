@@ -6,7 +6,7 @@ import config from "../config/config.js";
 
 // Initialize the AI models with their respective API keys and model names
 export const geminiModel = new ChatGoogle({
-    model: "gemini-flash-latest",
+    model: "gemini-2.5-flash",
     apiKey: config.GOOGLE_API_KEY,
 })
 
